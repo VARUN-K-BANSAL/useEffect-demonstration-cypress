@@ -6,7 +6,7 @@ function Counter(props) {
     const [count, setCount] = useState(0);
     const [text, setText] = useState('');
   
-    // Limit this useEffect from calling multiple times, means restrict it to be called only once i.e., when the component is mounted
+    // Limit this useEffect from calling multiple times, means restrict it to be called only once i.e., when the component mount
     useEffect(() => {
       console.log('Component mounted');
     });

@@ -7,6 +7,7 @@ function App() {
   return (
     <div className="App">
       {visible && <Counter setVisible={setVisible}/>}
+      <h3 id='isVisible' style={{display: "none"}}>{visible}</h3>
     </div>
   );
 }

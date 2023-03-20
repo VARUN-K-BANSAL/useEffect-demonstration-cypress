@@ -3,6 +3,7 @@ import React, {useState, useEffect} from "react";
 function Counter(props) {
     let [countVal, setCountVal] = useState(0);
     let [textVal, setTextVal] = useState(0);
+    // let [unmountState, setUnmountState] = useState(false)
     const [count, setCount] = useState(0);
     const [text, setText] = useState('');
   

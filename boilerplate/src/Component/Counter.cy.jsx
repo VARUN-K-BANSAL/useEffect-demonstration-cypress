@@ -12,10 +12,12 @@ describe("<Counter />", () => {
 
   
   it("renders", () => {
-    cy.mount(<Counter />);
+    cy.mount(<App />);
     cy.get("h1").should("contains.text", "Count: 0");
     cy.get("button").should("contains.text", "Increment");
     cy.get("input").should("exist");
+    cy.get('#unmount').click();
+    cy.get("@logSpy").should("be.calledWith", "Interval cleared");
   });
 
   it("check if increment works", () => {
@@ -40,6 +42,12 @@ describe("<Counter />", () => {
     cy.get("@logSpy").should("be.calledWith", "Interval cleared");
   });
 
+  it('Text changes on anyother state change', () => {
+    cy.mount(<Counter />);
+    cy.get("#increment").should("contains.text", "Increment").click();
+    cy.get('#textValField').should('have.text', '1')
+  })
+
   it('Count changes on anyother state change', () => {
     cy.mount(<Counter />);
     cy.get("input").type("Hello, world!");
@@ -47,9 +55,4 @@ describe("<Counter />", () => {
     cy.get('#countValField').should('have.text', '1')
   })
   
-  it('Text changes on anyother state change', () => {
-    cy.mount(<Counter />);
-    cy.get("#increment").should("contains.text", "Increment").click();
-    cy.get('#textValField').should('have.text', '1')
-  })
 });

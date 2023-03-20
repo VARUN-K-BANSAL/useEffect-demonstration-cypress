@@ -10,21 +10,18 @@ describe("<Counter />", () => {
     });
   })
 
-  afterEach(() => {
-    cy.get('#unmount').click();
-    cy.get("@logSpy").should("be.calledWith", "Interval cleared");
-  })
-
   
   it("renders", () => {
     cy.mount(<App />);
     cy.get("h1").should("contains.text", "Count: 0");
     cy.get("button").should("contains.text", "Increment");
     cy.get("input").should("exist");
+    cy.get('#unmount').click();
+    cy.get("@logSpy").should("be.calledWith", "Interval cleared");
   });
 
   it("check if increment works", () => {
-    cy.mount(<App />);
+    cy.mount(<Counter />);
     cy.get("h1").should("contains.text", "Count: 0");
     cy.get("#increment").should("contains.text", "Increment").click();
     cy.get("h1").should("contains.text", "Count: 1");
@@ -32,7 +29,7 @@ describe("<Counter />", () => {
   });
 
   it("updates text on input change", () => {
-    cy.mount(<App />);
+    cy.mount(<Counter />);
     cy.get("input").type("Hello, world!");
     cy.get('input').should('have.value', 'Hello, world!')
     cy.wait(1000);
@@ -41,18 +38,21 @@ describe("<Counter />", () => {
 
   it("clears interval on unmount", () => {
     cy.mount(<App />);
+    cy.get('#unmount').click();
+    cy.get("@logSpy").should("be.calledWith", "Interval cleared");
   });
 
+  it('Text changes on anyother state change', () => {
+    cy.mount(<Counter />);
+    cy.get("#increment").should("contains.text", "Increment").click();
+    cy.get('#textValField').should('have.text', '1')
+  })
+
   it('Count changes on anyother state change', () => {
-    cy.mount(<App />);
+    cy.mount(<Counter />);
     cy.get("input").type("Hello, world!");
     cy.get('input').should('have.value', 'Hello, world!')
     cy.get('#countValField').should('have.text', '1')
   })
   
-  it('Text changes on anyother state change', () => {
-    cy.mount(<App />);
-    cy.get("#increment").should("contains.text", "Increment").click();
-    cy.get('#textValField').should('have.text', '1')
-  })
 });
